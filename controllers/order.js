@@ -61,12 +61,12 @@ export const updateOrder = async (req, res) => {
 
 
 function validateOrder(order){
-    const schema ={
+    const schema = Joi.object({
         client : Joi.string().required(),
         productType: Joi.string().required(),
         isOrdered : Joi.boolean().required()
-    }
-    return Joi.validate(order, schema);
+    })
+    return schema.validate(order, schema);
 }
 
 

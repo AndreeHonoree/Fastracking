@@ -65,11 +65,11 @@ export const updateClient = async (req, res) => {
 
 
 function validateClient(client){
-    const schema = {
+    const schema = Joi.object({
         clientName: Joi.string().required(),
         phone: Joi.number().max(10).required()
-    };
-    return Joi.validate(client, schema);
+    });
+    return schema.validate(client, schema);
 };
 
 

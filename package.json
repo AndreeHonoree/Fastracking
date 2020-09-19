@@ -4,7 +4,7 @@
   "description": "A back-end development of an application that can help users to make shipping orders online. Here Clients can register, login and make orders.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
+    "start": "nodemon --exec babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node index.js"
   },
