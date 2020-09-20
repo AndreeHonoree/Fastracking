@@ -15,7 +15,7 @@ routes.post('/clients',checkExistingClient, validateClientEntry, createClient);
 
 routes.get('/clients/:id', getClientById);
 
-routes.put('/clients/:id', updateClient);
+routes.put('/clients/:id', validateClientEntry, updateClient);
 
 routes.delete('/clients/:id',  deleteClient);
 

@@ -24,7 +24,7 @@ export const checkExistingClient = async (req, res, next) => {
 
 export const validateClientEntry = async (req, res, next) => {
 
-    const {error} = validateClient(req.body)
+    const {error} = await validateClient(req.body)
     if(error) {
         res.status(BAD_REQUEST).send({
             status: BAD_REQUEST,
@@ -38,12 +38,12 @@ export const validateClientEntry = async (req, res, next) => {
 }
 
 function validateClient (client){
-    const schema = {
+    const schema = Joi.object({
         clientName : Joi.string().min(5).required(),
         companyName: Joi.string().required(),
         tin : Joi.number().required(),
-        email : Joi.string().required(),
+        email : Joi.string().email().required(),
         phone : Joi.number().required().max(10)
-    }
-    return Joi.validate(client,schema);
+    });
+    return schema.validate(client,schema);
 };

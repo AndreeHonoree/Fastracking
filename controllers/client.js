@@ -12,11 +12,6 @@ export const getClients = async(req,res) => {
 
 export const createClient = async(req, res) => {
 
-    // const{error}= validateClient(req.body);
-    // if(error) return res.status(BAD_REQUEST).send({
-    //     status:BAD_REQUEST,
-    //     message:error.details[0].message});
-
     const client = new Client({
         clientName: req.body.clientName,
         companyName: req.body.companyName,
@@ -39,11 +34,6 @@ export const createClient = async(req, res) => {
 
 export const updateClient = async (req, res) => {
 
-    const{error}= validateClient(req.body);
-    if(error) return res.status(400).send({
-        status:BAD_REQUEST,
-        message:error.details[0].message});
-
     const client = await Client.findByIdAndUpdate(req.params.id,{ 
         clientName:req.body.clientName,
         companyName: req.body.companyName,
@@ -62,15 +52,6 @@ export const updateClient = async (req, res) => {
     }
 
 };
-
-
-// function validateClient(client){
-//     const schema = {
-//         clientName: Joi.string().required(),
-//         phone: Joi.number().max(10).required()
-//     };
-//     return Joi.validate(client, schema);
-// };
 
 
 export const getClientById = async (req, res) => {
