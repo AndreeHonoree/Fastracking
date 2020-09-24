@@ -1,12 +1,16 @@
-import Joi from 'joi';
 import {Order} from '../models/order.js';
 import { OK, CREATED, NOT_FOUND, BAD_REQUEST } from '../statusCode.js';
+import { Client } from '../models/client.js';
+
+
+
+
 
 
 export const getOrders = async (req, res) => {
     const orders = await Order
     .find()
-    .populate('client','clientName companyName tin email phone -_id ')
+    .sort('companyName')
     .select('id client productType');
     res.status(OK).send({
         status:OK, message:'All orders made are displayed from database', orders});
@@ -15,21 +19,27 @@ export const getOrders = async (req, res) => {
 
 export const createOrder = async (req, res) => {
 
-    const{error} = validateOrder(req.body);
-    if(error) return res.status(BAD_REQUEST).send({
-        status:BAD_REQUEST,
-        message:error.details[0].message});
+    const client = await Client.findById(req.body.clientId);
+    if(!client) return res.status(BAD_REQUEST).send({
+        status: BAD_REQUEST,
+        message: 'Invalid client'
+    })
 
-    const order = await new Order({
-        client: req.body.client,
+    const order = new Order({
+        client: {
+            _id: client._id,
+            companyName: client.companyName,
+            tin: client.tin,
+            phone: client.phone
+        },
         productType: req.body.productType,
         isOrdered: req.body.isOrdered,
         price: req.body.price
     });
     try {
-        const result = await order.save();
+         await order.save();
     res.status(CREATED).send({
-        status: CREATED, message: 'Order has been created successfully', result});
+        status: CREATED, message: 'Order has been created successfully', order});
     }
     catch(err){
         res.send(err.message);
@@ -59,15 +69,6 @@ export const updateOrder = async (req, res) => {
     }
 };
 
-
-function validateOrder(order){
-    const schema ={
-        client : Joi.string().required(),
-        productType: Joi.string().required(),
-        isOrdered : Joi.boolean().required()
-    }
-    return Joi.validate(order, schema);
-}
 
 
 
