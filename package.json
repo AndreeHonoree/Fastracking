@@ -4,7 +4,7 @@
   "description": "A back-end development of an application that can help users to make shipping orders online. Here Clients can register, login and make orders.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node index.js",
+    "start": "nodemon --exec babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node index.js"
   },
@@ -20,9 +20,16 @@
   },
   "homepage": "https://github.com/andree-honoree/Fastracking#readme",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "config": "^3.3.2",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "joi": "^17.2.1",
+    "joi-objectid": "^3.0.1",
+    "joi-password-complexity": "^4.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.20",
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.5"
   },

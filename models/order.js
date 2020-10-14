@@ -5,10 +5,23 @@ import {clientSchema} from './client.js'
 
 const orderSchema = new mongoose.Schema({
     client:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Client',
-        // type:clientSchema,
-        // required: true
+        type: new mongoose.Schema({
+            companyName:{
+                type: String,
+                required: true
+            },
+            tin: {
+                type: Number,
+                required: true
+            },
+            phone: {
+                type: Number,
+                minlength:0,
+                maxlength: 10,
+                required: true
+            }
+        }),
+        required: true
     },
     productType:{
         type: String
@@ -17,11 +30,6 @@ const orderSchema = new mongoose.Schema({
     price: {
         type: String,
         required: function() {return this.isOrdered}
-    },
-    clientId : {
-        type: String,
-        required: true,
-        foreignKey: true
     }
 });
 
